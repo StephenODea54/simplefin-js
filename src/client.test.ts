@@ -44,4 +44,18 @@ describe('SimpleFinClient', () => {
     expect(typeof accessUrl).toBe('string');
     expect(accessUrl.startsWith('https://')).toBe(true);
   });
+
+  it('creates a SimpleFin instance when given a valid access URL', () => {
+    const accessUrl = 'https://example.com/access';
+    const client = SimpleFin.fromAccessUrl(accessUrl);
+
+    expect(client).toBeInstanceOf(SimpleFin);
+    expect(client.accessUrl).toBe(accessUrl);
+  });
+
+  it('throws an error when access URL is missing', () => {
+    expect(() => SimpleFin.fromAccessUrl('')).toThrowError(
+      'An access token is required. See the `fromSetupToken` method if you need to generate one',
+    );
+  });
 });

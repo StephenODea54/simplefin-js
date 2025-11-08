@@ -33,4 +33,13 @@ export class SimpleFin {
 
     return new SimpleFin(accessUrl);
   }
+
+  static fromAccessUrl(accessUrl: string): SimpleFin {
+    if (!accessUrl) {
+      throw new Error(
+        'An access token is required. See the `fromSetupToken` method if you need to generate one',
+      );
+    }
+    return new SimpleFin(accessUrl);
+  }
 }
