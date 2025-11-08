@@ -11,6 +11,7 @@
 # And permit certain files
 !.gitignore
 !LICENSE
+!.prettierrc
 
 # And filetypes
 !*.json
