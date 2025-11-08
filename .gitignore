@@ -9,3 +9,6 @@
 
 # And permit certain files
 !.gitignore
+
+# And filetypes
+!*.json
