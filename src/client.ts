@@ -1,10 +1,10 @@
 import { Buffer } from 'node:buffer';
 
 export class SimpleFin {
-  private setupToken: string;
+  accessUrl: string;
 
-  constructor(setupToken: string) {
-    this.setupToken = setupToken;
+  constructor(accessUrl: string) {
+    this.accessUrl = accessUrl;
   }
 
   static async fromSetupToken(setupToken: string): Promise<SimpleFin> {
