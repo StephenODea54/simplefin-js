@@ -14,5 +14,6 @@
   },
   "files": ["dist"],
   "type": "module",
-  "main": "dist/index.js"
+  "main": "dist/index.js",
+  "license": "MIT"
 }
