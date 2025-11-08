@@ -6,7 +6,8 @@
     "build": "tsc",
     "ci": "npm run build && npm run check-format",
     "check-format": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "vitest run"
   },
   "keywords": [
     "simplefin",
