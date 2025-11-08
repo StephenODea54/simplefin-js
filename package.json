@@ -2,6 +2,9 @@
   "name": "simplefin-js",
   "version": "0.0.1",
   "description": "A zero-dependency, type-safe TypeScript SDK for the SimpleFIN Bridge API.",
+  "scripts": {
+    "build": "tsc"
+  },
   "keywords": [
     "simplefin",
     "finance",
