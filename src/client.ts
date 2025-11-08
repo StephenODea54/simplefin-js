@@ -9,7 +9,7 @@ export class SimpleFin {
 
   static async fromSetupToken(setupToken: string): Promise<SimpleFin> {
     if (!setupToken) {
-      throw new Error("Setup token is required to generate an access URL.");
+      throw new Error('Setup token is required to generate an access URL.');
     }
 
     const claimUrl = Buffer.from(setupToken, 'base64').toString('utf-8');
