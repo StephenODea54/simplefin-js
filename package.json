@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A zero-dependency, type-safe TypeScript SDK for the SimpleFIN Bridge API.",
   "scripts": {
+    "dev": "vitest",
     "build": "tsc",
     "ci": "npm run build && npm run check-format",
     "check-format": "prettier --check .",
