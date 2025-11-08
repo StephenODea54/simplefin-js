@@ -26,6 +26,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^24.10.0",
     "typescript": "^5.9.3"
   }
 }
