@@ -13,3 +13,4 @@
 
 # And filetypes
 !*.json
+!*.md
