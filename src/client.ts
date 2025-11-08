@@ -29,10 +29,6 @@ export class SimpleFin {
       );
     }
 
-    if (!result.ok) {
-      throw new Error("LOL DOESN'T WORK. CREATE BETTER ERROR MESSAGES");
-    }
-
     const accessUrl = (await result.text()).trim();
 
     return new SimpleFin(accessUrl);
