@@ -5,6 +5,7 @@
 !*/
 
 # but still exclude generated folders
+*dist
 *node_modules
 
 # And permit certain files
