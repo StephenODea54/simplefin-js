@@ -4,7 +4,8 @@
   "description": "A zero-dependency, type-safe TypeScript SDK for the SimpleFIN Bridge API.",
   "scripts": {
     "build": "tsc",
-    "ci": "npm run build"
+    "ci": "npm run build",
+    "format": "prettier --write ."
   },
   "keywords": [
     "simplefin",
