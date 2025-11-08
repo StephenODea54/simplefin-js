@@ -1,1 +1,1 @@
-export { SimpleFin } from "./client.js";
+export { SimpleFin } from './client.js';
