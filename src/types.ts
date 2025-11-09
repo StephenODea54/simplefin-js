@@ -43,5 +43,6 @@ export type Account = {
 };
 
 export type GetAccountsResponse = {
+  errors: string[];
   accounts: Account[];
 };
