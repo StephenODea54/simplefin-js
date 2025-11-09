@@ -74,37 +74,25 @@ export class SimpleFin {
     };
   }
 
-  // Would like some type of way to enfore all HTTP wrapper methods have a `url` parameter
-  async getInfo(): Promise<GetInfoResponse> {
-    if (!this.accessUrl) {
-      throw new Error(
-        'An access url is required. See the `fromSetupToken` method if you need to generate one',
-      );
-    }
-
+  private async request<T>(path: string): Promise<T> {
     const { authHeader, baseUrl } = this.parseAuth();
-
-    const url = `${baseUrl}/info`;
+    const url = `${baseUrl}${path}`;
 
     let response: Response;
     try {
-      response = await fetch(url, {
-        headers: {
-          Authorization: authHeader,
-        },
-      });
+      response = await fetch(url, { headers: { Authorization: authHeader } });
     } catch (err) {
-      throw new Error(
-        `Failed to reach SimpleFIN server: ${(err as Error).message}`,
-      );
+      throw new Error(`Failed to reach SimpleFIN server: ${(err as Error).message}`);
     }
 
     if (!response.ok) {
-      throw new Error(
-        `Failed to fetch info: ${response.status} ${response.statusText}`,
-      );
+      throw new Error(`SimpleFIN request failed: ${response.status} ${response.statusText}`);
     }
 
-    return response.json() as Promise<GetInfoResponse>;
+    return response.json() as Promise<T>;
+  }
+
+  async getInfo(): Promise<GetInfoResponse> {
+    return this.request<GetInfoResponse>('/info');
   }
 }
