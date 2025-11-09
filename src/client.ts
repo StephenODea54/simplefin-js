@@ -82,11 +82,15 @@ export class SimpleFin {
     try {
       response = await fetch(url, { headers: { Authorization: authHeader } });
     } catch (err) {
-      throw new Error(`Failed to reach SimpleFIN server: ${(err as Error).message}`);
+      throw new Error(
+        `Failed to reach SimpleFIN server: ${(err as Error).message}`,
+      );
     }
 
     if (!response.ok) {
-      throw new Error(`SimpleFIN request failed: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `SimpleFIN request failed: ${response.status} ${response.statusText}`,
+      );
     }
 
     return response.json() as Promise<T>;
