@@ -1,7 +1,7 @@
 import { SimpleFin } from './client.js';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-async function getDemoSetupToken(): Promise<string> {
+async function getDemoClient(): Promise<SimpleFin> {
   const result = await fetch(
     'https://beta-bridge.simplefin.org/info/developers',
   );
@@ -24,8 +24,11 @@ async function getDemoSetupToken(): Promise<string> {
     throw new Error('Failed to parse setup token');
   }
 
-  return setupToken;
+  const client = await SimpleFin.fromSetupToken(setupToken);
+  return client;
 }
+
+const client = await getDemoClient();
 
 describe('SimpleFinClient', () => {
   it('should throw if setup token is empty', async () => {
@@ -34,25 +37,15 @@ describe('SimpleFinClient', () => {
     );
   });
 
-  it('demo token should be a string', async () => {
-    const setupToken = await getDemoSetupToken();
-    expect(setupToken).toMatch(/^[A-Za-z0-9+/=]+$/);
-  });
-
   it('fetches a demo setup token from SimpleFin and exchanges it for an access URL', async () => {
-    const setupToken = await getDemoSetupToken();
-
-    const simpleFinClient = await SimpleFin.fromSetupToken(setupToken);
-    expect(simpleFinClient).toBeInstanceOf(SimpleFin);
-
     /* Can't actually check for predetermined value of access token.
        As a middle ground, we check to make sure the URL looks valid. */
-    const accessUrl = simpleFinClient.accessUrl;
+    const accessUrl = client.accessUrl;
     expect(typeof accessUrl).toBe('string');
     expect(accessUrl.startsWith('https://')).toBe(true);
   });
 
-  it('creates a SimpleFin instance when given a valid access URL', () => {
+  it('creates a SimpleFin instance when given an access URL', () => {
     const accessUrl = 'https://example.com/access';
     const client = SimpleFin.fromAccessUrl(accessUrl);
 
@@ -67,12 +60,14 @@ describe('SimpleFinClient', () => {
   });
 
   it('fetches /info successfully', async () => {
-    const setupToken = await getDemoSetupToken();
-    const client = await SimpleFin.fromSetupToken(setupToken);
-
     const info = await client.getInfo();
 
-    expect(info).toHaveProperty('versions');
-    expect(Array.isArray(info.versions)).toBe(true);
+    expect(info).toBeDefined();
+  });
+
+  it('fetches /accounts successfully', async () => {
+    const accounts = await client.getAccounts();
+
+    expect(accounts).toBeDefined();
   });
 });

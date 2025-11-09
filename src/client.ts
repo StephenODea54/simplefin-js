@@ -1,5 +1,6 @@
 import { Buffer } from 'node:buffer';
-import type { GetInfoResponse } from './types.js';
+import type { GetAccountsResponse, GetInfoResponse } from './types.js';
+import { toUnixEpoch } from './utils.js';
 
 // TODO: Custom Error Handling to Reduce Code Duplication
 export class SimpleFin {
@@ -74,13 +75,34 @@ export class SimpleFin {
     };
   }
 
-  private async request<T>(path: string): Promise<T> {
+  private async request<T>(
+    path: string,
+    options: {
+      method: 'GET' | 'POST';
+      params?: Record<string, string | number | boolean | undefined | string[]>;
+    },
+  ): Promise<T> {
     const { authHeader, baseUrl } = this.parseAuth();
-    const url = `${baseUrl}${path}`;
+
+    const url = new URL(`${baseUrl}${path}`);
+    if (options?.params) {
+      for (const [key, value] of Object.entries(options.params)) {
+        if (value !== undefined && value !== null) {
+          if (Array.isArray(value)) {
+            value.forEach((v) => url.searchParams.append(key, String(v)));
+          } else {
+            url.searchParams.set(key, String(value));
+          }
+        }
+      }
+    }
 
     let response: Response;
     try {
-      response = await fetch(url, { headers: { Authorization: authHeader } });
+      response = await fetch(url.toString(), {
+        method: options?.method ?? 'GET',
+        headers: { Authorization: authHeader },
+      });
     } catch (err) {
       throw new Error(
         `Failed to reach SimpleFIN server: ${(err as Error).message}`,
@@ -97,6 +119,37 @@ export class SimpleFin {
   }
 
   async getInfo(): Promise<GetInfoResponse> {
-    return this.request<GetInfoResponse>('/info');
+    return this.request<GetInfoResponse>('/info', { method: 'GET' });
+  }
+
+  async getAccounts(params?: {
+    startDate?: string | number | Date;
+    endDate?: string | number | Date;
+    pending?: boolean;
+    account?: string | string[];
+    balancesOnly?: boolean;
+  }): Promise<GetAccountsResponse> {
+    const query: Record<
+      string,
+      string | number | boolean | undefined | string[]
+    > = {};
+
+    if (params) {
+      if (params.startDate) query['start-date'] = toUnixEpoch(params.startDate);
+      if (params.endDate) query['end-date'] = toUnixEpoch(params.endDate);
+      if (params.pending) query['pending'] = 1;
+      if (params.balancesOnly) query['balances-only'] = 1;
+
+      if (params.account) {
+        query['account'] = Array.isArray(params.account)
+          ? params.account
+          : [params.account];
+      }
+    }
+
+    return this.request<GetAccountsResponse>('/accounts', {
+      method: 'GET',
+      params: query,
+    });
   }
 }
