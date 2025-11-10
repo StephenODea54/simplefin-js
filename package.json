@@ -1,7 +1,7 @@
 {
   "name": "simplefin-js",
   "version": "0.0.1",
-  "description": "A zero-dependency, type-safe TypeScript SDK for the SimpleFIN Bridge API.",
+  "description": "A lightweight Node.js SDK for interacting with the SimpleFIN Bridge API",
   "scripts": {
     "dev": "vitest",
     "build": "rm -rf dist && tsc",
@@ -20,14 +20,14 @@
     "typescript",
     "sdk"
   ],
-  "homepage": "https://github.com/stephenodea/simplefin-js",
+  "homepage": "https://github.com/StephenODea54/simplefin-js",
   "bugs": {
-    "url": "https://github.com/stephenodea/simplefin-js/issues"
+    "url": "https://github.com/StephenODea54/simplefin-js/issues"
   },
-  "author": "Stephen O'Dea <hey@stephenodea.me> (https://github.com/stephenodea)",
+  "author": "Stephen O'Dea <hey@stephenodea.me> (https://github.com/StephenODea54)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stephenodea/simplefin-js.git"
+    "url": "git+https://github.com/StephenODea54/simplefin-js.git"
   },
   "files": [
     "dist"
