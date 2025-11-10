@@ -1,4 +1,4 @@
-import { SimpleFin } from './client.js';
+import { SimpleFin } from '../client.js';
 import { describe, expect, it, vi } from 'vitest';
 
 async function getDemoClient(): Promise<SimpleFin> {

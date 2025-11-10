@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { toUnixEpoch } from './utils.js';
+import { toUnixEpoch } from '../utils.js';
 
 describe('toUnixEpoch', () => {
   it('converts a Date object to a Unix timestamp string', () => {
